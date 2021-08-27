@@ -42,7 +42,7 @@ class Questions(tk.Tk):
         super().__init__()
         #self.wm_title(self.local_time)
         self.wm_title('time:')
-        self.configure(background = 'white')
+        self.configure(background = 'blue')
         self.wm_minsize(320, 320)
         self.wm_maxsize(650, 650)
         self.resizable(width = True, height = True)
