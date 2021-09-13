@@ -39,7 +39,8 @@ resolution = (640, 480) #分辨率
 Path = r'photo\\' #相册路径
 Interval = 5 #播放间隔，单位s
 Index = 0 #当前照片计数
-title = "电子相册"
+local_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+title = "电子相册 " + local_time
 
 def getfiles():
     files = os.listdir(Path)
@@ -65,6 +66,13 @@ img_out = img_in.resize(size_new, scaler) #重新设置大小
 img = ImageTk.PhotoImage(img_out) #用PhotoImage打开图片
 panel = tk.Label(root, image=img)
 panel.pack(side="bottom", fill="both", expand="yes")
+
+def refresh_data():
+    local_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    title = "电子相册 " + local_time
+    root.title(title)
+    #root.update()
+    root.after(1000, refresh_data)
 
 def callback(e):
     try:
@@ -128,8 +136,10 @@ def image_change():
 
 m = threading.Thread(target=playmusic) #创建音乐播放线程
 t = threading.Thread(target=image_change)
+f = threading.Thread(target=refresh_data)
 
 m.setDaemon(True)
 m.start()
 t.start()
+f.start()
 root.mainloop()
